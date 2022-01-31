@@ -14,13 +14,4 @@ for modulus in range(2, 80):
     assert (pow(3, n + period, modulus) - p3) % modulus == 0
     assert (p3 - p2 - 1) % modulus == 0
     print(modulus, end = " ")
-        
-P2 = [ 16, 32, 48, 64 ]
-P3 = [ 1, 3, 9, 27 ]
-E = range(-10, 5)
-D = { p2 - p3 - e for p2 in P2 for p3 in P3 for e in E}
-p3range = sorted(list({p - e for p in [1, 2, 4, 8] for e in E}))
-
-for x in range(-15, 74):
-    if x not in D:
-        print(x)
+    
