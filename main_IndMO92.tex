@@ -44,13 +44,12 @@
    
    \begin{proof}
      The idea is to work modulo $80$.
-     Put %$G = 80 \bZ$,  
+     Put  
      \begin{align*}
-     %I & = \{ -6, -5, -4, - 3, - 2, - 1, 0, 1, 2, 3 \} \,,  \\
-     P_2 & = \left\{ 16, 32, 48, 64 \right\} \,,  \\
+       P_2 & = \left\{ 16, 32, 48, 64 \right\} \,,  \\
        P_3 & = \left\{ 1, 3, 9, 27 \right\} \,,
              \intertext{and}
-     Q & = P_2 - P_3 - [- 10, 4] = [-15, - 1] \cup [1, 73] \,.
+       Q & = P_2 - P_3 - [- 10, 4] = [-15, - 1] \cup [1, 73] \,.
      \end{align*}      
      For each $n \in \bN$,
      $3^{n + 4}$ is congruent to $3^n$ modulo $80$ because 
@@ -187,8 +186,8 @@
    
    \begin{proof}
      Assume $x^2 = 2^m + 3^n$.
-     If $m = 0$ then $x^2 - 1 = 3^n$ and thus Lemma~\ref{lem:x2=q+1} ensures $x = 2$ and $n = 1$;
-     if $n = 0$ then $x^2 - 1 = 2^m$ and thus Lemma~\ref{lem:x2=q+1} ensures $x = m = 3$.
+     If $m = 0$ then $x^2 - 1 = 3^n$, and thus Lemma~\ref{lem:x2=q+1} ensures $x = 2$ and $n = 1$;
+     if $n = 0$ then $x^2 - 1 = 2^m$, and thus Lemma~\ref{lem:x2=q+1} ensures $x = m = 3$.
      Let us now assume $mn \ne 0$.
      Then, Lemma~\ref{lem:2m+3n-square-mod-12} ensures that both $m$ and $n$ are even.
      In particular, both $\mu = m \binover 2$ and $\nu = n \binover 2$ are a positive integers.
@@ -213,131 +212,7 @@
 
 \end{document} 
 
-   \begin{proof}
-     Assume $x^2 = 2^m + 3^n$.
-     Then, Lemma~\ref{lem:indian-modulo} ensures that both $m$ and $n$ are even.
-     In particular, there exist $q \in \bN$ such that $n = 2q$.
-     $$
-     2^m = 3^n - x^2 = 3^{2p} - x^2 = (3^p - x)(3^p + x) 
-     $$
-     There exist $i$, $j \in \bN$ such that $i + j = m$, $2^i = 3^p - x$, and $2^j = 3^p + x$.
-     Since $3^p - x$ is less than $3^q + x$, $i$ is less than $j$, or equivalently, $2^{j - i} - 1$ is an odd integer. 
-     $$
-     2 \cdot 3^p = (x + 3^p) - (x - 3^p) = 2^j - 2^i = 2^i(2^{j - i} - 1)
-     $$
-     whence $i = 1$ and $3^p = 2^{j - 1} - 1$
-     $(p, j - 1) \in \{ (1, 0) \}$  
-\end{proof}
 
-
-   \begin{lemma} \label{lem:indian-quatre-neuf} 
-     For every $x$, $m$, $n \in \bN$, $x^2 = 4^m + 9^n$ is equivalent to $(x, m, n) = (5, 2, 1)$.
-   \end{lemma}
-
-   \begin{proof}
-     Assume $x^2 = 4^m + 9^n$.
-     Then, we have  
-     $$
-     (x - 2^m)(x + 2^m) = x^2 - 4^m = 9^n = 3^{2n} \,,
-     $$
-     and thus there exist $i$, $j \in \bN$ such that
-     $p + q = 2 n$,
-     $x - 2^m = 3^p$, and
-     $x + 2^m = 3^q$.
-     Since $x - 2^m$  not greater than  $x + 2^m$,
-     $p$ is not greater than $q$,
-     or equivalently, $3^{q - p}$ is an integer.
-     Besides, straightforward computations yield 
-     $$
-     2^{m + 1} = (x + 2^m) - (x - 2^m) = 3^q - 3^p = 3^p \left(3^{q - p} - 1 \right) \,. 
-     $$
-     It follows $p = 0$, $q = 2 n$, and $2^{m + 1} = 3^{2n} - 1$,
-     whence $9^n - 2^{m + 1} = 1$.
-     Now, Lemma~\ref{lem:indian-neuf-deux} ensures $n = 1$ and $m = 2$.    
-   \end{proof}
-   
 \end{document}  
 \bibliographystyle{plain}
 \bibliography{IndMO92}
-\end{document}
-   \begin{proof}
-     Assume $9^n - 2^m = 1$.
-     Then, we have 
-     $$
-     2^m = 9^n - 1 = (3^n - 1)(3^n + 1) \,, 
-     $$
-     and thus there exist $p$, $q \in \bN$ such that 
-     $3^n - 1 = 2^p$
-     and
-     $3^n + 1 = 2^q$.
-     Since $3^n - 1$ is even, $p$ is positive, or equivalently, $2^{p - 1}$ is an integer;
-     since $3^n - 1$ is not greater than $3^n + 1$, $p$ is not greater than $q$, or equivalently, $2^{q - p}$ is an integer.
-     Besides, straightforward computations yield 
-     $$
-     1 =  \frac{3^n + 1}{2} - \frac{3^n - 1}{2} = 2^{q - 1} - 2^{p - 1}  = 2^{p - 1} (2^{q - p} - 1) \, .
-     $$
-     It follows $p = 1$, whence $n = 1$, and subsequently, $m = 3$.
-   \end{proof}
-
-      The table
-     $$  
-     \begin{array}{|rc|ccccccccc|}
-       \hline
-       k &            = & 0 & 1 & 2 & 3  & 4  & 5  & 6  & 7  & 8 \\
-       \hline
-       2^k \bmod 80 & = & 1 & 2 & 4 & 8  & \mathbf{16} & 32 & 64 & 48 & \mathbf{16} \\
-       3^k \bmod 80 & = & \mathbf{1} & 3 & 9 & 27 & \mathbf{1}  & 3  & 9  & 27 &  1   \\
-       \hline
-     \end{array}
-     $$
-     shows
-     that the sequence $\left( 2^k \bmod 80 \right)_{n \in \bN}$ is eventually periodic with 
-     $$
-     P_2 = \left\{ 2^{k + 4}  \bmod 80 : k \in \bN  \right\} 
-     $$
-     and
-     that the sequence $\left( 3^k \bmod 80 \right)_{n \in \bN}$ is periodic with 
-     $$P_3  = \left\{ 3^k \bmod 80 : k \in \bN \right\} \, . 
-     $$
-     Besides, straightforward computations yield 
-     $$
-     \left\{ x \bmod 80 : x \in P_2 - P_3 \right\} = D  \,.
-     $$
-     It follows 
-     $$
-     D = \left\{ (2^{m + 4} - 3^n) \bmod 80 : (m, n) \in \bN \times \bN \right\} \, .
-     $$
-     Since $\{ 1, 79 \}$ does not intersect $D$,
-     $\abs{2^{m + 4} - 3^n}$ is not congruent to $1$ modulo $80$ for any $m$, $n \in \bN$,
-     which implies 
-     $$
-     S \subseteq \{ 0, 1, 2, 3 \} \times \bN \, .
-     $$
-     Now, let $(m, n) \in S$.
-     \begin{proof}
-       Let $x$, $m \in \bN$ be such that $x^2 = 2^m + 1$.
-       Since
-       $$
-       2^m = x^2 - 1 = (x - 1)(x + 1) \,, 
-       $$
-       both $x - 1$ and $x + 1$ can be written as powers of~$2$.
-       Besides, $x - 1$ is less than $x + 1$.
-       Therefore, $x - 1$ divides $x + 1$.
-       It follows that $x - 1$ divides $(x + 1) - (x - 1) = 2$,
-       whence $x - 1 \in \{ 1, 2 \}$, or equivalently, $x \in \{ 2, 3 \}$.
-     \end{proof} 
-     \begin{proof}
-       Let $x$, $p$, $n \in \bN$ be such that  $p$ is prime and $x^2 = p^n + 1$.
-       Since
-       $$
-       p^n = x^2 - 1 = (x - 1)(x + 1) \,, 
-       $$
-       both $x - 1$ and $x + 1$ can be written as powers of~$p$.
-       Besides, $x - 1$ is less than $x + 1$.
-       Therefore, $x - 1$ divides $x + 1$.
-       It follows that $x - 1$ divides $(x + 1) - (x - 1) = 2$,
-       whence $x \in \{ 2, 3 \}$.
-       If $x = 2$ then $p^n = 3$, or equivalently, $(p, n) = (3, 1)$.
-       If $x = 3$ then $p^n = 8$, or equivalently, $(p, n) = (2, 3)$.
-       The desired result is now easily checked by inspection.
-    \end{proof} 
