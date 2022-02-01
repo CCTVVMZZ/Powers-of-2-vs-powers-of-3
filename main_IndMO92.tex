@@ -4,36 +4,40 @@
 
 \usepackage{hyperref,amsthm,amsmath,amsfonts,enumerate,stmaryrd}
 
-\newcommand{\bZ}{\mathbb{Z}}
+%\newcommand{\bZ}{\mathbb{Z}}
 \newcommand{\bN}{\mathbb{N}} %{\bZ_{\ge 0}}
 \newcommand{\bNast}{\bN^*}
 \newcommand{\binover}{\mathbin{/}}
 
 
 
-\newcommand{\seg}[2]{\left\llbracket#1, #2 \right\rrbracket}
-\newcommand{\floor}[1]{\left\lfloor #1  \right\rfloor}
-\newcommand{\ceil}[1]{\left\lceil #1  \right\rceil}
+% \newcommand{\seg}[2]{\left\llbracket#1, #2 \right\rrbracket}
+% \newcommand{\floor}[1]{\left\lfloor #1  \right\rfloor}
+% \newcommand{\ceil}[1]{\left\lceil #1  \right\rceil}
 \newcommand{\abs}[1]{\left| #1 \right|}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
 
 
  \theoremstyle{definition}
  \newtheorem{definition}{Definition}
- \newtheorem{exercise}{Exercise}
-% \newtheorem{example}{Example}
+ %\newtheorem{exercise}{Exercise}
+ %\newtheorem{example}{Example}
 
 
 
 
  \begin{document}
 
+ \title{Powers of $2$ versus powers of $3$: some thoughts about the battle}
+ \author{Charlot Colmes}
+ \maketitle 
 
 
- 
-   
+ The aim of this paper is to prove the following two theorems, which deal with powers of $2$ and $3$:
+
    \begin{theorem} \label{thm:2m-moins-3n}
      For all $m$, $n \in \bN$,
      $- 10 \le 2^m - 3^n  \le 4$ is equivalent to
@@ -42,34 +46,42 @@
    \end{theorem}
 
    
-   \begin{proof}
+   \begin{theorem} \label{thm:IndMO}
+     For all $x$, $m$, $n \in \bN$,
+     $x^2 = 2^m + 3^n$ is equivalent to
+     $$
+     (x, m, n) \in \{  (5, 4, 2), (2, 0, 1), (3, 3, 0) \} \, .
+     $$
+   \end{theorem}
+
+   Theorem~\ref{thm:IndMO} solves Question~$8$ of the $7$th Indian Mathematical Olympiad (1992).
+   Theorem~\ref{thm:2m-moins-3n} is proven by means of a ``magic'' modulus.
+   We show that such a method does not apply to Theorem~\ref{thm:IndMO}. 
+   
+   
+   \begin{proof}[Proof of Theorem~\ref{thm:2m-moins-3n}]
      The idea is to work modulo $80$.
      Put  
-     \begin{align*}
-       P_2 & = \left\{ 16, 32, 48, 64 \right\} \,,  \\
-       P_3 & = \left\{ 1, 3, 9, 27 \right\} \,,
-             \intertext{and}
-       Q & = P_2 - P_3 - [- 10, 4] = [-15, - 1] \cup [1, 73] \,.
-     \end{align*}      
+     $$
+     Q  = \{ 16, 32, 48, 64 \}  - \{ 1, 3, 9, 27 \}  - [- 10, 4] = [-15, - 1] \cup [1, 73] \,.
+     $$
+     %\end{align*}      
      For each $n \in \bN$,
      $3^{n + 4}$ is congruent to $3^n$ modulo $80$ because 
      $$3^{n + 4} - 3^n =  (3^4 - 1) 3^n = 80 \cdot  3^n \, .
      $$
      Therefore,
      a simple induction on $n$ shows that for each $n \in \bN$,
-     at least one element of $P_3$ is congruent to $3^n$ modulo $80$.
-     Similarly, for each $m \in \bN + 4$,
-     $2^{m + 4}$ is congruent to $2^m$ modulo $80$ because 
-     $$
-     2^{m + 4} - 2^{m}  = (2^8 - 2^4)2^{m - 4} = 80 \cdot 3 \cdot 2^{m - 4} \,.  
-     $$
-     %In addition, we have $2^8 - 80 = 48 \in P_2$.
-     Therefore, a simple induction on $m$ shows that for each $m \in \bN + 4$,
-    at least one element of $P_2$ is congruent to $2^m$ modulo $80$.
+     at least one element of $\{ 1, 3, 9, 27 \}$ is congruent to $3^n$ modulo $80$.
+     For each $m \in \bN$,
+     $2^m$ is congruent to $2^m \bmod 5$ modulo $5$ and
+     $2^m \bmod 5$ is an element of $[1, 4]$.
+     It follows that for each $m \in \bN$,
+     at least one element of
+     $\{ 16, 32, 48, 64 \} = 16 [1, 4]$ is congruent to $2^{m + 4}  = 16  \cdot 2^m$ modulo $80 = 16 \cdot 5$.
      Hence, for every $m \in \bN + 4$, every $n \in \bN$, and every $r \in [-10, 4]$, 
      at least one element of $Q$ is congruent to $2^m - 3^n - r$ modulo $80$.
      Besides, $Q$ does not contain any multiple of $80$.
-     %straightforward computation yield $Q = [- 15, - 1] \cup [1, 73]$.
      Therefore,
      $2^m - 3^n$ is incongruent to $r$ modulo $80$
      for every $m \in \bN + 4$,
@@ -88,61 +100,35 @@
 
    Since $2^4 - 3^3 = - 11$ and $2^5 - 3^3 = 5$,
    Theorem~\ref{thm:2m-moins-3n} is optimal.
-   Its proof relies on the modulus $80$ which is also optimal; let us explain why.
+   Its proof relies on the magic modulus $80$ which is also optimal; let us explain why.
    Put $p = 480720240$ (modular exponentiation is cheap~!);
    let $q \in [2, 79]$.
    If there exists $(m, n) \in \bN \times \bN$ such that
    $q$ divides $3^n - 2^m - 1$, $2^{m + p} - 2^m$, and $3^{n + p} - 3^n$
    then
    $3^{n + pk} - 2^{m + pk}$ is congruent to $1$ modulo $q$ for every $k \in \bN$,
-   which makes $q$ unsuitable for our purpose.
+   which makes $q$ non-magic. 
    We claim that such an ordered pair $(m, n)$ exists: 
    if $q \notin \{ 16, 27, 32, 48, 54, 64 \}$ then set $(m, n) = (3, 2)$,
    if $q \in \{ 16, 32, 64 \}$ then set $(m, n) = (6, 0)$, 
    if $q \in \{ 27, 54 \}$ then set $(m, n) = (9, 3)$, and 
-   if $q = 48$ then set $(m, n) = (5, 4)$.    
+   if $q = 48$ then set $(m, n) = (5, 4)$.
+   The verification is left to the reader.
 
-   \begin{theorem} \label{thm:pow-2-square-mod}
-     For each $m \in \bNast$,
-     there exist $\alpha$, $x \in \bNast$ such that for every  $k \in \bNast$, 
-     $2^{k \alpha + 3} + 1$ is congruent to $x^2$  modulo~$m$.
-   \end{theorem}
-
-   \begin{proof}
-     Let $n$, $v \in \bN$ be such that $m = 2^v n$ and $n$ is odd.
-     The Chinese remainder theorem ensures that there exists $x \in \bNast$ such that
-     $x$ is congruent to $1$ modulo $2^v$ and to $3$ modulo~$n$.
-     Since $2$ is multiplicatively invertible modulo $n$,
-     there exists $\phi \in \bNast$ such that $2^\phi$ is congruent to $1$ modulo $n$
-     (no knowledge about Euler's totient function is required here).
-     Put $\alpha = (v + 1) \phi$:
-     $\alpha$ is positive,
-     $\phi$ divides $\alpha$, and
-     $\alpha + 3$ is larger than~$v$.
-     For each $k \in \bNast$
-     $2^{k \alpha + 3} + 1$ is congruent
-     to $1$ modulo $2^v$ and
-     to $9$ modulo $n$,
-     whence $2^{k \alpha + 3} + 1$ is congruent to $x^2$ modulo~$m$.
-   \end{proof}
-     
-   \begin{theorem}
-     For each $m \in \bNast$,
-     there exist $\alpha$, $x \in \bNast$ such that for every $k \in \bNast$, 
-     $3^{k \alpha + 1} + 1$ is congruent to $x^2$ modulo~$m$.
-   \end{theorem}
-
-   \begin{proof}
-     The proof is similar to that of Theorem~\ref{thm:pow-2-square-mod} and left to the reader.
-    \end{proof} 
-
+   % \begin{proposition}
+   %   Let $b$, $m \in \bZ$ and let $X \subseteq \bZ$ be such that $bX \subseteq X + m \bZ$.
+   %   For every $n \in \bN$ and every $x \in X$, at least one element of $X$ is congruent to $b^n x$ modulo~$m$.
+   % \end{proposition}
+   
+   Let us now turn to the proof of Theorem~\ref{thm:IndMO}.
+   It requires the following two lemmas:
 
      \begin{lemma} \label{lem:x2=q+1}
        For every $x \in \bN$, $x^2 - 1$ is a prime power if, and only if, $x \in \{ 2, 3 \}$. 
      \end{lemma}
 
      \begin{proof}
-       Since  $2^2 - 1 = 3^1$ and since $3^2 - 1 = 2^3$, the ``if'' part is clear.
+       The ``if'' part is easily checked: $2^2 - 1 = 3^1$ and $3^2 - 1 = 2^3$. 
        It remains to prove the ``only if'' part.
        Let $x$, $p \in \bN$ be such that $p$ is prime and $x^2 - 1$ is a power of~$p$.
        Since  $x^2 - 1 = (x - 1)(x + 1)$, 
@@ -170,17 +156,17 @@
      Therefore, $n$ is even.
    \end{proof}
 
-   \begin{theorem}
-     For every $x$, $m$, $n \in \bN$,
-     $x^2 = 2^m + 3^n$ is equivalent to
-     $$
-     (x, m, n) \in \{  (5, 4, 2), (2, 0, 1), (3, 3, 0) \} \, .
-     $$
-   \end{theorem}
+   Let $x$, $p$, $q \in \bN$ be such that $p$ and $q$ are coprime.
+   It follows from the Chinese remainder theorem that
+   $x$ is a square modulo $p q$
+   if, and only if, $x$ is a both a square modulo $p$ and a square modulo~$q$.
+   In particular, if $x$ is both a square modulo $3$ and a square modulo $4$ then $x$ is square modulo $12$.
+   Another (implicit) use of that remark can be found in the proof of Theorem~\ref{thm:pow-2-square-mod} below.
+
    
-   \begin{proof}
+   \begin{proof}[Proof of Theorem~\ref{thm:IndMO}]
      Assume $x^2 = 2^m + 3^n$.
-     In the case where  $m = 0$,
+     In the case where $m = 0$,
      we have $x^2 - 1 = 3^n$,
      and thus Lemma~\ref{lem:x2=q+1} ensures $x = 2$ and $n = 1$;
      in the case where $n = 0$,
@@ -207,6 +193,42 @@
      It follows $\nu = 1$, $n = 2$, $\mu = 2$, $m = 4$, and $x = 5$.
      The desired result is now easily checked by inspection. 
   \end{proof}
+
+   \begin{theorem} \label{thm:pow-2-square-mod}
+     For each $m \in \bNast$,
+     there exist $\alpha$, $x \in \bNast$ such that for every  $k \in \bNast$, 
+     $2^{k \alpha + 3} + 1$ is congruent to $x^2$  modulo~$m$.
+   \end{theorem}
+
+   \begin{proof}
+     Let $n$, $v \in \bN$ be such that $m = 2^v n$ and $n$ is odd.
+     The Chinese remainder theorem ensures that there exists $x \in \bNast$ such that
+     $x$ is congruent to $1$ modulo $2^v$ and to $3$ modulo~$n$.
+     Since $2$ is multiplicatively invertible modulo $n$,
+     there exists $\phi \in \bNast$ such that $2^\phi$ is congruent to $1$ modulo $n$
+     (no knowledge about Euler's totient function is required here).
+     Put $\alpha = (v + 1) \phi$:
+     $\alpha$ is positive,
+     $\phi$ divides $\alpha$, and
+     $\alpha + 3$ is larger than~$v$.
+     For each $k \in \bNast$,
+     $2^{k \alpha + 3} + 1$ is congruent
+     to $1$ modulo $2^v$ and
+     to $9$ modulo $n$,
+     whence $2^{k \alpha + 3} + 1$ is congruent to $x^2$ modulo~$m$.
+   \end{proof}
+     
+   \begin{theorem}
+     For each $m \in \bNast$,
+     there exist $\alpha$, $x \in \bNast$ such that for every $k \in \bNast$, 
+     $3^{k \alpha + 1} + 1$ is congruent to $x^2$ modulo~$m$.
+   \end{theorem}
+
+   \begin{proof}
+     The proof is similar to that of Theorem~\ref{thm:pow-2-square-mod} and left to the reader.
+    \end{proof} 
+
+
 
 \end{document} 
 
