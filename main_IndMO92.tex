@@ -4,7 +4,7 @@
 
 \usepackage{hyperref,amsthm,amsmath,amsfonts,enumerate,stmaryrd}
 
-%\newcommand{\bZ}{\mathbb{Z}}
+\newcommand{\bZ}{\mathbb{Z}}
 \newcommand{\bN}{\mathbb{N}} %{\bZ_{\ge 0}}
 \newcommand{\bNast}{\bN^*}
 \newcommand{\binover}{\mathbin{/}}
@@ -117,11 +117,7 @@
    if $q = 48$ then set $(m, n) = (5, 4)$.
    The verification is left to the reader.
 
-   % \begin{proposition}
-   %   Let $b$, $m \in \bZ$ and let $X \subseteq \bZ$ be such that $bX \subseteq X + m \bZ$.
-   %   For every $n \in \bN$ and every $x \in X$, at least one element of $X$ is congruent to $b^n x$ modulo~$m$.
-   % \end{proposition}
-   
+  
    Let us now turn to the proof of Theorem~\ref{thm:IndMO}.
    It requires the following two lemmas:
 
@@ -158,14 +154,6 @@
      Therefore, $n$ is even.
    \end{proof}
 
-   Let $x$, $p$, $q \in \bN$ be such that $p$ and $q$ are coprime.
-   We claim that 
-   $x$ is a square modulo $p q$
-   if, and only if, $x$ is a both a square modulo $p$ and a square modulo~$q$.
-   The ``only if'' part is trivial and
-   implicitly used in the proof of Lemma~\ref{lem:2m+3n-square-mod-12} with $p = 3$ and $q = 4$.
-   The ``if'' part follows from the Chinese remainder theorem and
- in the proof of Theorem~\ref{thm:pow-2-square-mod} below.
 
    
    \begin{proof}[Proof of Theorem~\ref{thm:IndMO}]
@@ -207,20 +195,31 @@
   % they ensure that for every finite $Q \subseteq \bNast$,
   % both $E_Q \cap ( \{ 0 \} \times \bN )$ and $E_Q \cap ( \bN \times \{ 0 \})$ are infinite.
 
+  \begin{lemma} \label{lem:square-mn-m-n}
+   For every $n$, $x \in \bN$, 
+   $x$ is a square modulo $n$
+   if, and only if, $x$ is a square modulo every prime power that divides~$n$.
+ \end{lemma}
+
+ \begin{proof}
+   The ``only if'' part is trivial
+   (it was implicitly  used in the proof of Lemma~\ref{lem:2m+3n-square-mod-12} with $n = 12$).
+   The ``if'' part follows from the Chinese remainder theorem.
+ \end{proof} 
+
   Let $\phi$ denote Euler's totient function.
 
-  \begin{lemma}
+  \begin{lemma} \label{lem:Euler-0-or-1}
     Let $n$, $q \in \bNast$ be such that $q$ is a prime power that divides~$n$.
-   For every $x \in \bN$, $x^{\phi(n)}$ is congruent to either $0$ or $1$ modulo~$q$.
+     For every $x \in \bN$, either $x^{\phi(n)}$ is congruent to $1$ modulo $q$ or $q$ divides $x^{\phi(n)}$.
     %$x^{\phi(n)}$ and $x^{k \phi(n)}$ are congruent modulo~$n$. 
   \end{lemma}
 
   \begin{proof}
-    Let $p$, $r \in \bNast$ be such that
-    $p$ is prime and $q = p^r$.
+    Let $p$, $r \in \bNast$ be such that $p$ is prime and $q = p^r$.
     Without loss of generality, we may assume that $p^{r + 1}$ does not divide~$n$.
     First, assume that $p$ does not divide~$x$.
-    Then $x$ and $q$ are coprime,
+    Then, $x$ and $q$ are coprime,
     and thus Euler's theorem ensures that $x^{\phi(q)}$ is congruent to $1$ modulo $q$.
     Besides, $\phi(q)$ divides $\phi(n)$ because $\phi$ is multiplicative.
     It follows that $x^{\phi(n)}$ is congruent to $1$ modulo~$q$.
@@ -230,173 +229,41 @@
     $$
     \phi(n) \ge \phi(q) = p^{r - 1} (p - 1) \ge 2^{r - 1} \ge r \,.
     $$
-    It follows that $x^{\phi(n)}$ is congruent to $0$ modulo~$q$.
+    It follows that $q$ divides $x^{\phi(n)}$.
 \end{proof} 
-  
-  \begin{proof}
-    First, assume that $p$ does not divide~$x$.
-    Then $x$ and $p^r$ are coprime,
-    and thus Euler's theorem ensures that $x^{\phi(p^r)}$ is congruent to $1$ modulo $p^r$.
-    Besides,  $\phi(p^r)$ divides $\phi(n)$ because $\phi$ is multiplicative.
-    It follows that both $x^{\phi(n)}$ and $x^{2\phi(n)}$ are congruent to $1$ modulo $p^r$.
-    Second, assume that $p$ divides~$x$.
-    Then, both  $x^{\phi(n)}$ and $x^{2\phi(n)}$ are congruent to $0$ modulo $p^r$
-    because
-    $$
-    \phi(n) \ge \phi(p^r) = p^{r - 1} (p - 1) \ge 2^{r - 1} \ge r \, .
-    $$  
-    Either way, $x^{\phi(n)}$ and $x^{2\phi(n)}$ are congruent modulo $p^r$.
-    Therefore, $x^{\phi(n)}$ and $x^{2\phi(n)}$ are congruent modulo any prime power that divides $n$,
-    or equivalently, $x^{\phi(n)}$ and $x^{2\phi(n)}$ are congruent modulo~$n$.
-    The desired result follows from a simple induction on~$k$.
-  \end{proof}
-  
-  $n = 2^u p = 3^v q$
-  
-  $$
-  2^{\phi(n)} = 2^{u \phi(n)} 
-  $$
 
-  $$
-  2^{\phi(n)}
-  $$
-  \begin{theorem}
+\begin{lemma} \label{lem:Euler-k-phi}
+  For every $n$, $k \in \bNast$ and every $x \in \bN$,
+  $x^{\phi(n)}$ and $x^{k \phi(n)}$ are congruent modulo~$n$.
+\end{lemma}
+
+\begin{proof}
+  Since $0 = 0^k$ and $1 = 1^k$,
+  Lemma~\ref{lem:Euler-0-or-1} ensures that 
+  $x^{\phi(n)}$ and $x^{k \phi(n)}$ are congruent modulo any prime power that divides~$n$.
+\end{proof}
+
+
+   \begin{theorem}
     For every $(x, y) \in \{ (16, 9), (8, 1), (1, 3) \}$ and every $n \in \bNast$, 
     $x^{1 + \phi(n)} + y^{1 + \phi(n)}$ is a square modulo~$n$. 
   \end{theorem}
 
   \begin{proof}
-
-      
-    Let $\alpha$ be such that 
-    Without loss of generality, we may assume $u \ge 4$.
-    Let $u$, $v$, $q' \in \bN$ be such that $q = 2^u 3^v q'$ and $6$ does not divide $q'$.
-    Since $2$ is invertible modulo $3^v q'$,
-    there exists $\phi \in \bNast$ such that $2^\phi$ is congruent to $1$ modulo $3^v q'$
-    (no knowledge about Euler's totient function is required here).
-    Since $3$ is invertible modulo $2^u q'$,
-    there exists $\psi \in \bNast$ such that $2^\psi$ is congruent to $1$ modulo $2^u q'$.
-    Set $\alpha = (u + v + 1)\phi \psi$.
-    %Note that $\alpha > 0$.
-    % both $\phi$ and $\psi$ divide $\alpha$
-    % and 
-    % $1 + \alpha$ is larger than $u$, and
-    % $1 + \alpha$ is larger than~$v$.
-    Since $\alpha > u$,
-    $2^\alpha$ is congruent to $0$ modulo $2^u$.
-    Since $\phi$ divides $\alpha$, 
-    $2^\alpha$ is congruent to $1$ modulo $3^v q'$.
-    Since $\alpha > v$,
-    $3^\alpha$ is congruent to $0$ modulo $3^v$.
-    Since $\phi$ divides $\alpha$,
-    $3^\alpha$ is congruent to $1$ modulo $2^u q'$. 
-       
-    
-     $$
-     \begin{array}{|r|ccccc|}
-       \hline 
-       & 2^\alpha & 3^\alpha & 1 + 3^{1 + k \alpha} & 16^{1 + k \alpha} + 9^{1 + k \alpha} & 8^{1 + k \alpha} + 1 \\
-    \hline                                                                                     
-       2^u &  0 &  1 & 4 & 9 &  1 \\
-       3^v &  1 &  0 & 1 & 16 & 9 \\
-       q'  &  1 &  1 & 4 & 25 & 9 \\
-        \hline 
-     \end{array} 
-     $$
-        
-    
-    %  $$
-    %  \begin{array}{|r|ccccc|}
-    %    \hline 
-    %    2^\alpha & \\
-    %    3^\alpha & \\
-    %    1 + 3^{1 + k \alpha} & \\
-    %    2^{4(1 + k \alpha)} + 3^{2(1 + k \alpha)} & \\
-    %    2^{3(1 + k \alpha)} + 1 \\
-    % \hline                                                                                     
-    %    % 2^u &  0 &  1 & 4 & 9 &  1 \\
-    %    % 3^v &  1 &  0 & 1 & 16 & 9 \\
-    %    % q'  &  1 &  1 & 4 & 25 & 9 \\
-    %    %  \hline 
-    %  \end{array} 
-    %  $$
-    
-    Let us apply the Chinese remainder theorem three times:
-    there exist $x_{4, 2}$, $x_{0, 1}$, $x_{3, 0} \in \bNast$ such that
-    $x_{4, 2}$ is congruent to $3$ modulo $2^u$,
-    $x_{4, 2}$ is congruent to $4$ modulo $3^v$, 
-    $x_{4, 2}$ is congruent to $5$ modulo $q'$,
-    $x_{0, 1}$ is congruent to $1$ modulo $3^v$,
-    $x_{0, 1}$ is congruent to $2$ modulo $2^u q'$,
-    $x_{3, 0}$ is congruent to $1$ modulo $2^u$,
-    $x_{3, 0}$ is congruent to $3$ modulo $3^v q'$.
-    
-    
-    % $$
-    % 2^{(1 + \alpha k) m} 
-    % $$
-    % $0$ modulo
-    % $2^m$ modulo 
-    % $$
-    % 3^{(1 + \alpha) n} 
-    % $$
-    Put
-    $$
-    y = 2^{(1 + k \alpha)m} + 3^{(1 + k \alpha)n}
-    $$
-    for each $k \in \bN$.
-    % Since $(1 + k \alpha) m$ is not less than $u$ and 
-    % since $\psi$ divides $\alpha$,
-    % $y_k$ is congruent to $9$ modulo $2^u$.
-    % Since $\phi$ divides $\alpha$ and
-    % since $(1 + k \alpha) n$ is not less than $v$,
-    % $y_k$ is congruent to $16$ modulo $3^v$.
-    % Since both $\phi$ and $\psi$ divide $\alpha$,
-    % $y_k$ is congruent to $25$ modulo $q'$.
-    Second, let us examine the case where $m = 0$ and $n = 1$.
-    $x$ is congruent to $1$ modulo $3^v$ and 
-    $x$ is congruent to $2$ modulo $2^u q'$.
-    Since $(1 + k \alpha) n$ is larger than $v$,
-    $y_k$ is congruent to $1$ modulo $3^v$.
-    Since $\psi$ divides $\alpha$,
-    $y_k$ is congruent to $4$ modulo $2^u q'$.
-   \end{proof} 
-
-% (4, 2), (0, 1), (3, 0)
-   \begin{theorem} \label{thm:pow-2-square-mod}
-     For each $q \in \bNast$,
-     there exist $\alpha$, $x \in \bNast$ such that for every $k \in \bNast$, 
-     $2^{3 + k \alpha} + 1$ is congruent to $x^2$ modulo~$q$.
-   \end{theorem}
-
-   \begin{proof}
-     Let $p$, $\nu \in \bN$ be such that $q = 2^\nu p$ and $p$ is odd.
-     The Chinese remainder theorem ensures that there exists $x \in \bNast$ such that
-     $x$ is congruent to $1$ modulo $2^\nu$ and to $3$ modulo~$p$.
-     Since $2$ is multiplicatively invertible modulo $p$,
-     there exists $\phi \in \bNast$ such that $2^\phi$ is congruent to $1$ modulo $p$
-     (no knowledge about Euler's totient function is required here).
-     Put $\alpha = (\nu + 1) \phi$:
-     $\alpha$ is positive,
-     $\phi$ divides $\alpha$, and
-     $3 + \alpha$ is larger than~$v$.
-     For each $k \in \bNast$,
-     $2^{k \alpha + 3} + 1$ is congruent
-     to $1$ modulo $2^v$ and
-     to $9$ modulo $p$,
-     whence $2^{3 + k \alpha} + 1$ is congruent to $x^2$ modulo~$q$.
-   \end{proof}
-     
-   \begin{theorem}
-     For each $m \in \bNast$,
-     there exist $\alpha$, $x \in \bNast$ such that for every $k \in \bNast$, 
-     $3^{1 + k \alpha} + 1$ is congruent to $x^2$ modulo~$m$.
-   \end{theorem}
-
-   \begin{proof}
-     The proof is similar to that of Theorem~\ref{thm:pow-2-square-mod} and left to the reader.
-    \end{proof} 
-
+    Put $m = 1 + \phi(n)$.
+    Let $q$ be a prime power that divides~$n$.
+    By Lemma~\ref{lem:square-mn-m-n}
+    Our task is to prove that $x^m + y^m$ is a square modulo~$q$.
+    For each $u \in \bN$, 
+    Lemma~\ref{lem:Euler-0-or-1} ensures that $u^m$ is congruent to $0$ or $u$ modulo~$q$.
+    Therefore, 
+    \begin{itemize}
+      \item $16^m + 9^m$ is congruent to $0$, $9$, $16$, or $25$ modulo $q$,
+      \item $8^m + 1$ is congruent to $1$ or $9$ modulo $q$, and 
+      \item $1 + 3^m$ is congruent to $1$ or $4$ modulo~$q$.
+      \end{itemize}
+    Since $0$, $1$, $4$, $9$, $16$, and $25$ are perfect squares.
+    \end{proof}
 
 
 \end{document} 
