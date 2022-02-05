@@ -38,7 +38,7 @@
 
  The aim of this paper is to prove the following two theorems, which deal with powers of $2$ and $3$:
 
-   \begin{theorem} \label{thm:2m-moins-3n}
+   \begin{theorem}[Herschfeld 1936] \label{thm:2m-moins-3n}
      For all $m$, $n \in \bN$,
      $- 10 \le 2^m - 3^n  \le 4$ is equivalent to
      $$(2^m, 3^n) \in \{ (8, 9), (4, 3), (2, 3), (2, 1)  \} \, .
@@ -54,9 +54,11 @@
      $$
    \end{theorem}
 
+   Theorem~\ref{thm:2m-moins-3n} is related to the origin
+   of the famous \emph{Catalan's conjecture} \cite{Ribenboim-Catalan,Herschfeld36};
    Theorem~\ref{thm:IndMO} solves Question~$8$ of the $7$th Indian Mathematical Olympiad (1992).
    Theorem~\ref{thm:2m-moins-3n} is proven by means of a ``magic'' modulus;
-   we show that such a method does not apply to Theorem~\ref{thm:IndMO}. 
+   we show that such a method is not applicable to Theorem~\ref{thm:IndMO}.
    Before proceeding,
 
    Let $b \in \bN$ and let $m \in \bNast$.
@@ -117,7 +119,8 @@
    if $q = 48$ then set $(m, n) = (5, 4)$.
    The verification is left to the reader.
 
-  
+   A well-known Theorem~\ref{thm:2m-moins-3n} 
+   
    Let us now turn to the proof of Theorem~\ref{thm:IndMO}.
    It requires the following two lemmas:
 
@@ -196,14 +199,14 @@
   % both $E_Q \cap ( \{ 0 \} \times \bN )$ and $E_Q \cap ( \bN \times \{ 0 \})$ are infinite.
 
   \begin{lemma} \label{lem:square-mn-m-n}
-   For every $n$, $x \in \bN$, 
-   $x$ is a square modulo $n$
-   if, and only if, $x$ is a square modulo every prime power that divides~$n$.
+   For every $p$, $q$, $x \in \bN$ such that $p$ and $q$ are coprime,
+   $x$ is a square modulo $p q$
+   if, and only if, $x$ is both a square modulo $p$ and a square modulo~$q$.
  \end{lemma}
 
  \begin{proof}
    The ``only if'' part is trivial
-   (it was implicitly  used in the proof of Lemma~\ref{lem:2m+3n-square-mod-12} with $n = 12$).
+   (it was implicitly  used in the proof of Lemma~\ref{lem:2m+3n-square-mod-12} with $p = 3$ and $q = 4$).
    The ``if'' part follows from the Chinese remainder theorem.
  \end{proof} 
 
@@ -212,17 +215,19 @@
   \begin{lemma} \label{lem:Euler-0-or-1}
     Let $n$, $q \in \bNast$ be such that $q$ is a prime power that divides~$n$.
      For every $x \in \bN$, either $x^{\phi(n)}$ is congruent to $1$ modulo $q$ or $q$ divides $x^{\phi(n)}$.
-    %$x^{\phi(n)}$ and $x^{k \phi(n)}$ are congruent modulo~$n$. 
   \end{lemma}
 
   \begin{proof}
     Let $p$, $r \in \bNast$ be such that $p$ is prime and $q = p^r$.
-    Without loss of generality, we may assume that $p^{r + 1}$ does not divide~$n$.
+    Without loss of generality,
+    we may assume that $p^{r + 1}$ does not divide $n$,
+    whence $n q^{-1}$ and $q$ are coprime.
     First, assume that $p$ does not divide~$x$.
     Then, $x$ and $q$ are coprime,
     and thus Euler's theorem ensures that $x^{\phi(q)}$ is congruent to $1$ modulo $q$.
     Besides, $\phi(q)$ divides $\phi(n)$ because $\phi$ is multiplicative.
-    It follows that $x^{\phi(n)}$ is congruent to $1$ modulo~$q$.
+    It follows that $x^{\phi(n)}$ is a power of $x^{\phi(q)}$,
+      and thus $x^{\phi(n)}$ is congruent to $1$ modulo~$q$.
     Second, assume that $p$ divides~$x$.
     Then, $q$ divides $x^r$.
     Besides, $x^r$ divides $x^{\phi(n)}$ because
@@ -232,43 +237,46 @@
     It follows that $q$ divides $x^{\phi(n)}$.
 \end{proof} 
 
-\begin{lemma} \label{lem:Euler-k-phi}
-  For every $n$, $k \in \bNast$ and every $x \in \bN$,
-  $x^{\phi(n)}$ and $x^{k \phi(n)}$ are congruent modulo~$n$.
-\end{lemma}
+An interesting corollary of Lemma~\ref{lem:Euler-0-or-1} is that 
+for every $n$, $k \in \bNast$ and every $x \in \bN$,
+$x^{\phi(n)}$ and $x^{k \phi(n)}$ are congruent modulo~$n$.
+The latter result is a nice equivalent of Euler's theorem.
 
-\begin{proof}
-  Since $0 = 0^k$ and $1 = 1^k$,
-  Lemma~\ref{lem:Euler-0-or-1} ensures that 
-  $x^{\phi(n)}$ and $x^{k \phi(n)}$ are congruent modulo any prime power that divides~$n$.
-\end{proof}
+% \begin{proof}
+%   Since $0 = 0^k$ and $1 = 1^k$,
+%   Lemma~\ref{lem:Euler-0-or-1} ensures that 
+%   $x^{\phi(n)}$ and $x^{k \phi(n)}$ are congruent modulo any prime power that divides~$n$.
+% \end{proof}
 
 
    \begin{theorem}
-    For every $(x, y) \in \{ (16, 9), (8, 1), (1, 3) \}$ and every $n \in \bNast$, 
-    $x^{1 + \phi(n)} + y^{1 + \phi(n)}$ is a square modulo~$n$. 
+    For every $(x, y) \in \{ (16, 9), (8, 1), (1, 3) \}$ and every $n$, $k \in \bNast$, 
+    $x^{1 + k \phi(n)} + y^{1 + k \phi(n)}$ is a square modulo~$n$. 
   \end{theorem}
 
   \begin{proof}
-    Put $m = 1 + \phi(n)$.
+    Put $m = 1 + k \phi(n)$.
     Let $q$ be a prime power that divides~$n$.
-    By Lemma~\ref{lem:square-mn-m-n}
-    Our task is to prove that $x^m + y^m$ is a square modulo~$q$.
+    % By Lemma~\ref{lem:square-mn-m-n}
+    % Our task is to prove that $x^m + y^m$ is a square modulo~$q$.
     For each $u \in \bN$, 
-    Lemma~\ref{lem:Euler-0-or-1} ensures that $u^m$ is congruent to $0$ or $u$ modulo~$q$.
+    Lemma~\ref{lem:Euler-0-or-1} ensures that either $u^m$ is congruent to $u$ modulo $q$ or $q$ divides $u^m$.
     Therefore, 
     \begin{itemize}
-      \item $16^m + 9^m$ is congruent to $0$, $9$, $16$, or $25$ modulo $q$,
+    \item $16^m + 9^m$ is congruent to $0$, $9$, $16$, or $25$ modulo $q$
+      (although $0$ can be omitted from that list, its presence is harmless),
       \item $8^m + 1$ is congruent to $1$ or $9$ modulo $q$, and 
       \item $1 + 3^m$ is congruent to $1$ or $4$ modulo~$q$.
       \end{itemize}
-    Since $0$, $1$, $4$, $9$, $16$, and $25$ are perfect squares.
+      Since $0$, $1$, $4$, $9$, $16$, and $25$ are perfect squares,
+      $x^m + y^m$ is a square modulo~$q$.
+      Since $q$ is any prime power that divides $n$,
+      repeated applications of Lemma~\ref{lem:square-mn-m-n}
+      show that $x^m + y^m$ is a square modulo~$n$.
     \end{proof}
 
 
+\bibliographystyle{plain}
+\bibliography{bib_IndMO92}
 \end{document} 
 
-
-\end{document}  
-\bibliographystyle{plain}
-\bibliography{IndMO92}
