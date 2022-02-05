@@ -5,6 +5,7 @@
 \usepackage{hyperref,amsthm,amsmath,amsfonts,enumerate,stmaryrd}
 
 \newcommand{\bZ}{\mathbb{Z}}
+\newcommand{\bZast}{\bZ^\ast}
 \newcommand{\bN}{\mathbb{N}} %{\bZ_{\ge 0}}
 \newcommand{\bNast}{\bN^*}
 \newcommand{\binover}{\mathbin{/}}
@@ -40,14 +41,11 @@
 
    \begin{theorem}[Herschfeld 1936] \label{thm:2m-moins-3n}
      For all $m$, $n \in \bN$,
-     $- 139 < 2^m - 3^n  < 269$ is equivalent to
-     $$
-     (m, n) \in \{ (8, 9), (4, 3), (2, 3), (2, 1)  \} \, .
-     $$
+     $- 139 < 2^m - 3^n  < 269$ implies both $m \le 8$ and $n \le 5$.
    \end{theorem}
 
    
-   \begin{theorem} \label{thm:IndMO}
+   \begin{theorem}[Indian Mathematical Olympiad 1992]  \label{thm:IndMO}
      For all $x$, $m$, $n \in \bN$,
      $x^2 = 2^m + 3^n$ is equivalent to
      $$
@@ -56,10 +54,18 @@
    \end{theorem}
 
    Theorem~\ref{thm:2m-moins-3n} is related to the origin
-   of the famous \emph{Catalan's conjecture} \cite{Ribenboim-Catalan,Herschfeld36};
-   Theorem~\ref{thm:IndMO} solves Question~$8$ of the $7$th Indian Mathematical Olympiad (1992).
+   of the famous \emph{Catalan's conjecture} \cite{Ribenboim-Catalan}.
+   It was stated by Herschfeld in 1936 \cite{Herschfeld36, Ribenboim-Catalan} but his proof was never published.
+   Theorem~\ref{thm:IndMO} solves Question~$8$ of the $7$th Indian Mathematical Olympiad.
    Theorem~\ref{thm:2m-moins-3n} is proven by means of a ``magic'' modulus;
    we show that such a method is not applicable to Theorem~\ref{thm:IndMO}.
+
+   \begin{lemma}
+     Let $x$, $m \in \bZ$ and let $i$, $j \in \bN$
+     be such that $i < j$ and $x^i$ is congruent to $x^j$ modulo~$m$.
+     For each $n \in \bN$,
+     there exists $k \in [i, j - i]$ such that $x^{n + i}$ is congruent to $x^k$ modulo~$m$.
+   \end{lemma}
    Before proceeding,
 
    Let $b \in \bN$ and let $m \in \bNast$.
@@ -103,23 +109,9 @@
      and thus the desired result is easily checked by inspection.
    \end{proof}
 
-   Since $2^4 - 3^3 = - 11$ and $2^5 - 3^3 = 5$,
+   Since $2^{11} - 3^7 = - 139$ and $2^9 - 3^5 = 269$,
    Theorem~\ref{thm:2m-moins-3n} is optimal.
-   Its proof relies on the magic modulus $80$ which is also optimal; let us explain why.
-   Put $\alpha = 480720240$ (modular exponentiation is cheap~!);
-   let $q \in [2, 79]$.
-   If there exists $(m, n) \in \bN \times \bN$ such that
-   $q$ divides $3^n - 2^m - 1$, $2^{m + \alpha} - 2^m$, and $3^{n + \alpha} - 3^n$
-   then
-   $3^{n + k \alpha} - 2^{m + k \alpha}$ is congruent to $1$ modulo $q$ for every $k \in \bN$,
-   which makes $q$ non-magic. 
-   We claim that such an ordered pair $(m, n)$ exists: 
-   if $q \notin \{ 16, 27, 32, 48, 54, 64 \}$ then set $(m, n) = (3, 2)$,
-   if $q \in \{ 16, 32, 64 \}$ then set $(m, n) = (6, 0)$, 
-   if $q \in \{ 27, 54 \}$ then set $(m, n) = (9, 3)$, and 
-   if $q = 48$ then set $(m, n) = (5, 4)$.
-   The verification is left to the reader.
-
+   
    A well-known Theorem~\ref{thm:2m-moins-3n} 
    
    Let us now turn to the proof of Theorem~\ref{thm:IndMO}.
