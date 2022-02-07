@@ -1,3 +1,22 @@
+def tortoise_and_hare(x0, f):
+    t = f(x0)
+    h = f(f(x0))
+    while t != h:
+        t = f(t) 
+        h = f(f((h)))
+    preperiod = []
+    t = x0
+    while t != h:
+        preperiod.append(t)
+        t = f(t)
+        h = f(h)
+    period = [t]
+    h = f(t)
+    while t != h:
+        period.append(h)
+        h = f(h) 
+    return preperiod, period
+
 def powers(b, m):
     t = b = b % m
     h = b2 = (b * b) % m
@@ -16,6 +35,23 @@ def powers(b, m):
         P.append(h)
         h = (b * h) % m
     return Q, P
+
+def smallest_nonegative_difference(X, Y):
+    smallest_so_far = X[-1] - Y[0]
+    if smallest_so_far < 0:
+        raise ValueError("All differences are negative !!!")
+    i = 0
+    j = 0
+    while (i < len(X)) and (j < len(Y)):
+        d = X[i] - Y[j]
+        if d < 0:
+            i += 1
+        else:
+            smallest_so_far = min(d, smallest_so_far)
+            j += 1
+    return smallest_so_far
+    
+    
 
 def test_modulus(m):
     Q2, P2 = powers(2, m)
@@ -51,5 +87,13 @@ def test_modulus(m):
         else:
             i3 += 1
             
-    return pos, neg
+    return len(Q2), len(Q3), pos, neg
+
         
+def brutal_test(modulus, p2min, p2max, p3min, p3max, rmin, rmax):
+    assert pow(2, p2min, modulus) == pow(2, p2max, modulus)
+    assert pow(3, p3min, modulus) == pow(3, p3max, modulus)
+    for p2 in range(p2min, p2max):
+        for p3 in range(p3min, p3max):
+            for r in range(rmin, rmax):
+                assert (pow(2, p2, modulus) - pow(3, p3, modulus) - r) % modulus != 0 
