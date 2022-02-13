@@ -2,11 +2,12 @@
 
 \documentclass[12pt]{article}
 
-\usepackage{hyperref,amsthm,amsmath,amsfonts,enumerate,stmaryrd}
+\usepackage{hyperref,amsthm,amsmath,amsfonts,enumerate,pythonhighlight}
 
 \newcommand{\bZ}{\mathbb{Z}}
 \newcommand{\bZast}{\bZ^\ast}
 \newcommand{\bN}{\mathbb{N}} %{\bZ_{\ge 0}}
+
 \newcommand{\bNast}{\bN^*}
 \newcommand{\binover}{\mathbin{/}}
 
@@ -39,13 +40,13 @@
 
  The aim of this paper is to prove the following two theorems, which deal with powers of $2$ and $3$:
 
-   \begin{theorem}[Herschfeld 1936] \label{thm:2m-moins-3n}
+   \begin{theorem}[Herschfeld $1936$] \label{thm:2m-moins-3n}
      For all $m$, $n \in \bN$,
      $- 139 < 2^m - 3^n  < 269$ implies both $m \le 8$ and $n \le 5$.
    \end{theorem}
 
    
-   \begin{theorem}[Indian Mathematical Olympiad 1992]  \label{thm:IndMO}
+   \begin{theorem}[$1992$ Indian Mathematical Olympiad]  \label{thm:IndMO}
      For all $x$, $m$, $n \in \bN$,
      $x^2 = 2^m + 3^n$ is equivalent to
      $$
@@ -53,66 +54,101 @@
      $$
    \end{theorem}
 
-   Theorem~\ref{thm:2m-moins-3n} is related to the origin
-   of the famous \emph{Catalan's conjecture} \cite{Ribenboim-Catalan}.
-   It was stated by Herschfeld in 1936 \cite{Herschfeld36, Ribenboim-Catalan} but his proof was never published.
-   Theorem~\ref{thm:IndMO} solves Question~$8$ of the $7$th Indian Mathematical Olympiad.
-   Theorem~\ref{thm:2m-moins-3n} is proven by means of a ``magic'' modulus;
-   we show that such a method is not applicable to Theorem~\ref{thm:IndMO}.
-
-   \begin{lemma}
-     Let $x$, $m \in \bZ$ and let $i$, $j \in \bN$
-     be such that $i < j$ and $x^i$ is congruent to $x^j$ modulo~$m$.
-     For each $n \in \bN$,
-     there exists $k \in [i, j - i]$ such that $x^{n + i}$ is congruent to $x^k$ modulo~$m$.
-   \end{lemma}
-   Before proceeding,
-
-   Let $b \in \bN$ and let $m \in \bNast$.
-   The sequence $\left( b^n \bmod m \right)_{n \in \bN}$ is eventually periodic.
-   It is purely periodic if, and only if, $b$ is coprime to~$m$.
-   
-   \begin{proof}[Proof of Theorem~\ref{thm:2m-moins-3n}]
-     The idea is to work modulo $80$.
-     Put  
-     $$
-     Q  = \{ 16, 32, 48, 64 \}  - \{ 1, 3, 9, 27 \}  - [- 10, 4] = [-15, - 1] \cup [1, 73] \,.
-     $$
-     %\end{align*}      
-     For each $n \in \bN$,
-     $3^{n + 4}$ is congruent to $3^n$ modulo $80$ because 
-     $$3^{n + 4} - 3^n =  (3^4 - 1) 3^n = 80 \cdot  3^n \, .
-     $$
-     Therefore,
-     a simple induction on $n$ shows that for each $n \in \bN$,
-     at least one element of $\{ 1, 3, 9, 27 \}$ is congruent to $3^n$ modulo $80$.
-     For each $m \in \bN$,
-     $2^m \bmod 5$
-     is both congruent to $2^m$ modulo $5$ and an element of $[1, 4]$.
-     It follows that for each $m \in \bN$,
-     at least one element of
-     $\{ 16, 32, 48, 64 \} = 16 [1, 4]$ is congruent to $2^{m + 4}  = 16  \cdot 2^m$ modulo $80 = 16 \cdot 5$.
-     Hence, for every $m$, $n \in \bN$ and every $r \in [-10, 4]$, 
-     at least one element of $Q$ is congruent to $2^{m + 4} - 3^n - r$ modulo $80$.
-     Besides, $Q$ does not contain any multiple of $80$.
-     Therefore,
-     $2^{m + 4}  - 3^n$ is incongruent to $r$ modulo $80$
-     for every $m$, $n \in \bN$ and every $r \in [- 10, 4]$.
-     Now, let $m$, $n \in \bN$ be such that $2^m - 3^n \in [-10, 4]$.
-     The previous discussion ensures $m < 4$,
-     whence  
-     $$
-     3^n \in 2^m - [- 10, 4] \subseteq \{ 1, 2, 4, 8 \} - [- 10, 4] = [ -3, 18] \, ,
-     $$
-     and consequently, $n \le 2$.
-     It follows that $(m, n)$ lies in the small finite set $[0, 3] \times [0, 2]$,
-     and thus the desired result is easily checked by inspection.
-   \end{proof}
-
+  
+   Theorem~\ref{thm:2m-moins-3n}
+   was stated by Herschfeld in 1936 \cite{Herschfeld36, Ribenboim-Catalan} but his proof was never published.
+   Theorem~\ref{thm:2m-moins-3n} is related to the famous \emph{Catalan's conjecture} \cite{Ribenboim-Catalan}.
    Since $2^{11} - 3^7 = - 139$ and $2^9 - 3^5 = 269$,
    Theorem~\ref{thm:2m-moins-3n} is optimal.
+   Theorem~\ref{thm:IndMO} solves Question~$8$ of the $1992$ Indian Mathematical Olympiad.
+   Our proof of Theorem~\ref{thm:2m-moins-3n} relies on a ``magic'' modulus and requires the assistance of a computer;
+   we show that such a method is not applicable to Theorem~\ref{thm:IndMO}.
+
+   \begin{lemma} \label{lem:powers-congruent}
+     Let $i$, $j$, $k$, $x \in \bZ$ be such that $0 \le i < j$ and $i \le k$.
+     There exists $l \in [i, j - 1]$ such that 
+     $x^k$ is congruent to  $x^l$ modulo $x^j - x^i$. 
+     %$x^{i + k}$ is congruent to $x^{i + k \bmod (j - i)}$ modulo $x^j - x^i$. 
+   \end{lemma}
+
+   \begin{proof}
+     Put $m = x^j - x^i$.
+     We proceed by induction on~$k$.
+     If $k \in [i, j - 1]$ then $k$ is a suitable choice for~$l$.
+     Therefore, the first $j - i$ steps of our induction are cleared.
+     Now, assume $k \ge j$. %or equivalently, $k - j \in \bN$.
+     Then, 
+     the induction hypothesis ensures that there exists $l \in [i, j - 1]$ such that
+     $x^{i - j + k}$ is congruent to $x^l$ modulo~$m$.
+     Therefore, $m$ divides 
+     $$
+     % = (x^k - x^{i - j + k}) + (x^{i - j + k} - x^l)
+     m x^{k - j} + \left(x^{i - j + k} - x^l \right) =  x^k - x^l \,, 
+   $$
+   and thus $x^k$ is congruent to $x^l$ modulo~$m$.
+     % Besides, $x^k$ is congruent to $x^{i - j + k}$  modulo $m$ because 
+     % $x^k - x^{i - j + k} = m x^{k - j}$.
+  %   It follows that $x^k$ is congruent to $x^l$ modulo $m$ by transitivity.
+     \end{proof}
    
-   A well-known Theorem~\ref{thm:2m-moins-3n} 
+   Let $x \in \bZ$ and let $m \in \bZast$.
+   The sequence $\left( x^n \bmod m \right)_{n \in \bN}$ is eventually periodic.
+   It is purely periodic if, and only if, $x$ is coprime to~$m$.
+   Euler's theorem ..
+   
+   \begin{proof}[Proof of Theorem~\ref{thm:2m-moins-3n}]
+     For all $m$, $n \in \bN$ such that $- 139 < 2^m - 3^n < 269$, $m \le 8$ is equivalent to $n \le 5$.
+     %because $269 + 3^5 = 2^9$ and $139 + 2^8 < 729 = 3^6$.
+     Therefore, it suffices to prove that there exists $q \in \bNast$
+     such that
+     $$
+\left( 2^{m + 9} - 3^n \right) \bmod q  \in [269, q - 139]  
+     $$
+     for all $m$, $n \in \bN$. 
+     Set $q = 2^9 \cdot 17 \cdot 257 = 2236928$.
+     Put
+     % $$
+     % P_2  = \left\{ 2^m \bmod q : m \in [9, 24] \right\}
+     % $$
+     % and
+     % $$
+     % P_3  = \left\{ 3^n \bmod q : n \in [0, 255] \right\} \,.
+     % $$
+     \begin{align*}
+     P_2 & = \left\{ 2^m \bmod q : m \in [9, 24] \right\} 
+               \intertext{and}
+     P_3 & = \left\{ 3^n \bmod q : n \in [0, 255] \right\} \,.
+      \end{align*}
+     For each $k  \in \bN$,
+     Lemma~\ref{lem:powers-congruent} ensures that
+     at least one element of $P_2$ is congruent to $2^{k + 9}$  modulo $2^{24} - 2^9$
+     and that
+     at least one element of $P_3$ is congruent to $3^k$ modulo $3^{256} - 1$.
+     A very basic laptop computer checks instantly that $q$ divides both $2^{25} - 2^9$ and $3^{256}  - 1$
+     (after all, $3^{256}$ is only $406$ bit long).
+     Therefore, for every $m$, $n \in \bN$ and every $r \in [-138, 268]$,
+     at least one element of $Q$ is congruent to $2^m - 3^n - r$ modulo~$q$.
+     Besides,
+     our computer can also enumerate $Q$ in a matter of seconds and check that it does not contain any multiple of~$q$.
+   \end{proof}
+
+   %\lstinputlisting[language=Python]
+
+   \begin{python}     
+def delta0(X, Y):
+    smallest_so_far = X[-1] - Y[0]
+    i = 0
+    j = 0
+    while (i < len(X)) and (j < len(Y)):
+        d = X[i] - Y[j]
+        if d < 0:
+            i += 1
+        else:
+            smallest_so_far = min(d, smallest_so_far)
+            j += 1
+    return smallest_so_far
+   \end{python}
+   % A well-known Theorem~\ref{thm:2m-moins-3n}
    
    Let us now turn to the proof of Theorem~\ref{thm:IndMO}.
    It requires the following two lemmas:
