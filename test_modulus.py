@@ -17,24 +17,8 @@ def tortoise_and_hare(x0, f):
         h = f(h) 
     return preperiod, period
 
-def powers(b, m):
-    t = b = b % m
-    h = b2 = (b * b) % m
-    while t != h:
-        t = (b * t) % m
-        h = (b2 * h) % m
-    Q = []
-    t = 1
-    while t != h:
-        Q.append(t)
-        t = (b * t) % m
-        h = (b * h) % m
-    P = [t]
-    h = (b * t) % m
-    while t != h:
-        P.append(h)
-        h = (b * h) % m
-    return Q, P
+def all_powers(b, m):
+    return tortoise_and_hare(1, lambda x: (x * b) % m)
 
 def smallest_nonegative_difference(X, Y):
     smallest_so_far = X[-1] - Y[0]
@@ -91,9 +75,14 @@ def test_modulus(m):
 
         
 def brutal_test(modulus, p2min, p2max, p3min, p3max, rmin, rmax):
+    Q2, P2 = all_powers(2, modulus)
+    Q3, P3 = all_powers(3, modulus)
     assert pow(2, p2min, modulus) == pow(2, p2max, modulus)
     assert pow(3, p3min, modulus) == pow(3, p3max, modulus)
     for p2 in range(p2min, p2max):
         for p3 in range(p3min, p3max):
             for r in range(rmin, rmax):
                 assert (pow(2, p2, modulus) - pow(3, p3, modulus) - r) % modulus != 0 
+
+
+#print(all_powers(2, 14))
