@@ -1,53 +1,3 @@
-"""
-That module contains two functions called \"floyd\" and \"brent\", respectively.
-Each implements a cycle detection algorithm based on the \"tortoise and hare\" strategy.
-The code is adapted from wikipedia:
-
-https://en.wikipedia.org/w/index.php?title=Cycle_detection&oldid=1067069441
-"""
-
-def floyd(f, x0):
-    """ 
-    An implementation of Floyd's \"tortoise and hare\" algorithm.
-    It returns a tuple (preperiod, period) of lists.
-    """
-
-    tortoise = f(x0) 
-    hare = f(tortoise)
-    while tortoise != hare:
-        tortoise = f(tortoise)
-        hare = f(f(hare))   # The hare moves twice as fast as the tortoise
-  
-    preperiod = []
-    tortoise = x0    # The tortoise is reset
-    while tortoise != hare:
-        preperiod.append(tortoise)
-        tortoise = f(tortoise)
-        hare = f(hare)   # The hare and tortoise move at same speed
- 
-    period = [tortoise] 
-    hare = f(tortoise)
-    while tortoise != hare:
-        period.append(hare)
-        hare = f(hare)   # The tortoise stay still
- 
-    return preperiod, period
-
-
-def brent(it):
-    it = iter(it)
-    q = p = 1
-    hare = next(it)
-    tortoise = next(it)
-    while tortoise != hare:
-        if p == q:  # time to start a new power of two?
-            hare = tortoise  # The hare jumps !!
-            q <<= 1
-            p = 0
-        tortoise = next(it)
-        p += 1
-    return tortoise, p
-
 def floyd(f, x1):
     p = 1
     tortoise = x1 
@@ -69,41 +19,51 @@ def brent(f, x1):
             p = 0
         tortoise = f(tortoise)
         p += 1
-    return hare, p
+    return hare, q, p
 
-def iter_func(f, x):
-    while True:
-        yield x
-        x = f(x)
+class count_calls:
+    def __init__(self, f):
+        self.func = f
+        self.calls = 0
 
-from itertools import cycle
+    def __call__(self, x):
+        self.calls += 1
+        return self.func(x)
 
-def iter_eventually_periodic(q, p):
-    yield from range(q + p - 1, p - 1, -1)
-    yield from cycle(range(p))
-
-def func_eventually_periodic(p):
-    def f(n):
-        if n > 0:
-            return n - 1
-        return p - 1
+def eventually_periodic(q, p):
+    def f(x):
+        x += 1
+        if x == p + q: return q
+        return x 
     return f
 
-# m = 81 * 7
-# b = 3
-# mule = lambda x: (b * x) % m
-# print(floyd(mule, 1))
-# print(brent(iter_func(mule, 1)))
-
+powersof2 = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
 
 print()
-#for p in [5, 9, 17, 33, 65]:
-for p in [3, 7, 15, 31, 63]:
-    f = lambda x: (x + 1) % p
-    print(brent(f, 0), "|", floyd(f, 0))
+print("Purely periodic case.")
+print()
+print("Period  Floyd  Brent" )
+for p in powersof2:
+    f = count_calls(lambda x: (x + 1) % (p + 1))
+    _, _, p_brent = brent(f, 0)
+    nb_brent = f.calls 
+    f.calls = 0
+    _, p_floyd = floyd(f, 0)
+    assert p_brent == p_floyd
+    print(f"{p_brent:6d}{f.calls:7}{nb_brent:7}")
+    
+print()
+print("Eventually constant case.")
+print()
 
-
-# for p in [4, 8, 16, 32, 64]:    
-#     print(brent(iter_eventually_periodic(p - 1, 1)), "*", 
-#           floyd(func_eventually_periodic(1), p))
+f = count_calls(lambda x: x - 1 if x > 0 else 0)
+print("Preperiod  Floyd  Brent  Ratio") 
+for p in powersof2: 
+    brent(f, p - 1)
+    nb_brent = f.calls
+    f.calls = 0
+    floyd(f, p - 1)
+    nb_floyd = f.calls
+    f.calls = 0
+    print(f"{p:9}{nb_floyd:7}{nb_brent:7}{nb_floyd/nb_brent:7.3f}")
 
